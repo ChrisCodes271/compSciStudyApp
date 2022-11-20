@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def create_table():
+def create_table():  # Generate FLASHCARDS table. Set CardID, and Card front and back parameters for entries
     conn = sqlite3.connect('flashcards.db')
     cursor = conn.cursor()
     cursor.execute('CREATE TABLE FLASHCARDS ('
@@ -12,14 +12,15 @@ def create_table():
     conn.close()
 
 
-def delete_table():
+def delete_table():  # Delete flashcards table
     conn = sqlite3.connect('flashcards.db')
     cursor = conn.cursor()
     cursor.execute('DROP TABLE FLASHCARDS')
     conn.close()
 
 
-def new_entry(card_front, card_back):
+def new_entry(card_front, card_back):  # Pass card front and card back from buttons module new_flashcard function
+                                       # Input values into a new entry in the flashcards table
     card = [card_front, card_back]
     conn = sqlite3.connect('flashcards.db')
     cursor = conn.cursor()
@@ -28,7 +29,8 @@ def new_entry(card_front, card_back):
     conn.close()
 
 
-def delete_entry(card_id):
+def delete_entry(card_id):  # Pass cards ID from buttons module delete_flashcard function
+                            # Input card ID is deleted from the flashcards table
     card = card_id
     conn = sqlite3.connect('flashcards.db')
     cursor = conn.cursor()
