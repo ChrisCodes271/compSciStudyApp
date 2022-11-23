@@ -5,7 +5,7 @@ from tkinter import *
 def add_test_bank_button(window):
     button = Button(window,
                     text='Create new test bank.',
-                    command=auxFunctions.create_test_bank(),
+                    command=auxFunctions.create_test_bank,
                     font=('Arial', 25),
                     )
     button.pack()
