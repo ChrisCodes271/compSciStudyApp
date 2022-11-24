@@ -39,8 +39,13 @@ def delete_flashcard():  # Request what card to erase. Currently, requires SQL E
         databaseFunctions.delete_entry(card_id)
 
     except Exception as e:
-        messagebox.showerror(title="An Error Occured", message=str(e))
+        messagebox.showerror(title="An Error Occurred", message=str(e))
 
 
-def new_quiz():
-    print('We got this far...')
+def new_question():
+    try:
+        var = databaseFunctions.retrieve_random_cardfront()
+        messagebox.showinfo(title='Card',message=str(var))
+
+    except Exception as e:
+        messagebox.showerror(title="An Error Occurred", message=str(e))
