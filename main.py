@@ -12,6 +12,6 @@ buttons.add_test_bank_button(window)
 buttons.delete_test_bank_button(window)
 buttons.add_flashcard_button(window)
 buttons.delete_flashcard_button(window)
-buttons.new_quiz_button(window)
+buttons.new_question_button(window)
 
 window.mainloop()

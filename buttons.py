@@ -5,7 +5,7 @@ from tkinter import *
 def add_test_bank_button(window):
     button = Button(window,
                     text='Create new test bank.',
-                    command=auxFunctions.create_test_bank(),
+                    command=auxFunctions.create_test_bank,
                     font=('Arial', 25),
                     )
     button.pack()
@@ -36,9 +36,9 @@ def delete_flashcard_button(window):
     button.pack()
 
 
-def new_quiz_button(window):
+def new_question_button(window):
     button = Button(window,
                     text='New Quiz',
-                    command=auxFunctions.new_quiz,
+                    command=auxFunctions.new_question,
                     font=('Arial', 25))
     button.pack()
