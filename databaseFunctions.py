@@ -1,6 +1,4 @@
-from tkinter import *
 import sqlite3
-from tkinter import messagebox
 
 
 def create_table():  # Generate FLASHCARDS table. Set CardID, and Card front and back parameters for entries
@@ -41,30 +39,28 @@ def delete_entry(card_id):  # Pass cards ID from buttons module delete_flashcard
     conn.close()
 
 
-def retrieve_random_cardfront():
+def retrieve_random_card():
     conn = sqlite3.connect('flashcards.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT CardFront FROM FLASHCARDS ORDER BY RANDOM() LIMIT 1;")
-    result = cursor.fetchall()
-    conn.close()
-    print(type(result))
-    messagebox.showinfo(title='Test', message=''.join(result[0]))
+    cursor.execute("""SELECT * FROM FLASHCARDS ORDER BY RANDOM() LIMIT 1;""")
+    records = cursor.fetchall()
+    correct_card = dict()
+    for row in records:
+        correct_card[0] = row[1]
+        correct_card[1] = row[2]
+    cursor.close()
+    return correct_card
 
 
-def retrieve_random_cardback():
+def retrieve_random_answer():
+    card_back = ''
     conn = sqlite3.connect('flashcards.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT CardBack FROM FLASHCARDS ORDER BY RANDOM() LIMIT 3;")
-    test_var = cursor.fetchall()
+    cursor.execute("""SELECT * FROM FLASHCARDS ORDER BY RANDOM() LIMIT 3;""")
+    records = cursor.fetchall()
+    for row in records:
+            card_back = row[2]
     conn.close()
-    return test_var
+    return card_back
 
 
-window = Tk()
-button = Button(window,
-                text='Test Button',
-                command=retrieve_random_cardfront,
-                )
-button.pack()
-
-window.mainloop()
