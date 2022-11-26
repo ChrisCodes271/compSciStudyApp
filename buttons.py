@@ -42,3 +42,4 @@ def new_question_button(window):
                     command=auxFunctions.new_question,
                     font=('Arial', 25))
     button.pack()
+
