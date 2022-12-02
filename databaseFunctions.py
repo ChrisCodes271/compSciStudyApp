@@ -39,28 +39,16 @@ def delete_entry(card_id):  # Pass cards ID from buttons module delete_flashcard
     conn.close()
 
 
-def retrieve_random_card():
+def retrieve_card_data():
     conn = sqlite3.connect('flashcards.db')
     cursor = conn.cursor()
-    cursor.execute("""SELECT * FROM FLASHCARDS ORDER BY RANDOM() LIMIT 1;""")
-    records = cursor.fetchall()
-    correct_card = dict()
-    for row in records:
-        correct_card[0] = row[1]
-        correct_card[1] = row[2]
+    random_flash_cards = cursor.execute("SELECT CardFront, CardBack FROM FLASHCARDS ORDER BY RANDOM() LIMIT 4;").fetchall()
     cursor.close()
-    return correct_card
-
-
-def retrieve_random_answer():
-    card_back = ''
-    conn = sqlite3.connect('flashcards.db')
-    cursor = conn.cursor()
-    cursor.execute("""SELECT * FROM FLASHCARDS ORDER BY RANDOM() LIMIT 3;""")
-    records = cursor.fetchall()
-    for row in records:
-            card_back = row[2]
-    conn.close()
-    return card_back
+    question = random_flash_cards[0][0]
+    correct_answer = random_flash_cards[0][1]
+    answer_2 = random_flash_cards[1][1]
+    answer_3 = random_flash_cards[2][1]
+    answer_4 = random_flash_cards[3][1]
+    return question, correct_answer, answer_2, answer_3, answer_4
 
 

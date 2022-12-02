@@ -1,4 +1,5 @@
 import databaseFunctions
+from tkinter import *
 from tkinter import messagebox
 from tkinter import simpledialog
 import random
@@ -43,52 +44,44 @@ def delete_flashcard():  # Request what card to erase. Currently, requires SQL E
         messagebox.showerror(title="An Error Occurred", message=str(e))
 
 
-def generate_question_data():  # This function will generate a question, correct answer, and 3 other answers.
-                               # all answers will be stored in the answer_bank dictionary
-                               # the question, correct answer, and answer_bank will be returned.
-    try:
-        correct_card = databaseFunctions.retrieve_random_card()
-        question = correct_card[0]
-        correct_answer = correct_card[1]
-        answer_bank = dict()
-        answer_bank[3] = correct_answer
-        answer_bank[0] = ''
-        answer_bank[1] = ''
-        answer_bank[2] = ''
-        i = 3
-        j = 0
-        while i > 0:
-            test_value = databaseFunctions.retrieve_random_answer()
-            if test_value != correct_answer:
-                if test_value != answer_bank[0] and test_value != answer_bank[1] and test_value != answer_bank[2]:
-                    answer_bank[j] = test_value
-                    i -= 1
-                    j += 1
-        random.shuffle(x := list(answer_bank.values()))
-        for el in enumerate(answer_bank.items()):
-            answer_bank[el[1][0]] = x[el[0]]
-
-        return answer_bank, correct_answer, question
-
-    except Exception as e:
-        messagebox.showerror(title="An Error Occurred", message=str(e))
+def gen_question_data():
+    card_data = databaseFunctions.retrieve_card_data()
+    question = card_data[0]  # Retrieve question from correct card.
+    correct_answer = card_data[1]
+    answer_bank = [card_data[1], card_data[2], card_data[3], card_data[4]]
+    random.shuffle(answer_bank)
+    return question, correct_answer, answer_bank
 
 
-def new_question():
-    x = generate_question_data()
-    question = x[2]
-    correct_answer = x[1]
-    returned_answers = x[0]
-    print(question)
+def new_question_refactor(window):
+    new_window = Toplevel(window)
+    question_data = gen_question_data()
+    question = question_data[0]
+    correct_answer = question_data[1]
+    answer_bank = question_data[2]
+    messagebox.showinfo(title="Question!", message=question)
+    button1 = Button(new_window,
+                     text=answer_bank[0],
+                     command=lambda : submit(answer_bank[0], correct_answer))
+    button2 = Button(new_window,
+                     text=answer_bank[1],
+                     command=lambda: submit(answer_bank[1], correct_answer))
+    button3 = Button(new_window,
+                     text=answer_bank[2],
+                     command=lambda: submit(answer_bank[2], correct_answer))
+    button4 = Button(new_window,
+                     text=answer_bank[3],
+                     command=lambda: submit(answer_bank[3], correct_answer))
+    button1.pack()
+    button2.pack()
+    button3.pack()
+    button4.pack()
+
+
+def submit(chosen_answer, correct_answer):
+    print(chosen_answer)
     print(correct_answer)
-    a = returned_answers[0]
-    b = returned_answers[1]
-    c = returned_answers[2]
-    d = returned_answers[3]
-    print("A: " + a)
-    print("B: " + b)
-    print("C: " + c)
-    print("D: " + d)
-
-
-new_question()
+    if chosen_answer == correct_answer:
+        messagebox.showinfo("CORRECT")
+    else:
+        messagebox.showinfo("WRONG")

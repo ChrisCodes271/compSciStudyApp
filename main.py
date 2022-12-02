@@ -2,7 +2,7 @@ from tkinter import *
 import buttons
 
 window = Tk()
-window.geometry("800x800")
+window.geometry("1400x1000")
 window.title("Roadmap.sh FlashCards (CompSci)")
 icon = PhotoImage(file='logo.png')
 window.iconphoto(TRUE, icon)

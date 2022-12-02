@@ -39,7 +39,6 @@ def delete_flashcard_button(window):
 def new_question_button(window):
     button = Button(window,
                     text='New Quiz',
-                    command=auxFunctions.new_question,
+                    command=lambda: auxFunctions.new_question_refactor(window),
                     font=('Arial', 25))
     button.pack()
-
