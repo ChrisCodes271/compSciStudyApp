@@ -14,6 +14,11 @@ root.iconphoto(TRUE, icon) # Icon support on Windows (Currently does nothing on 
 frame = customtkinter.CTkFrame(master=root) # Generate frame for future use. 
 frame.pack(pady=20, padx=40, fill="both", expand=True) # Set padding from main window, and pack
 
+
+# Generate quiz button in frame. Pass frame as anon to auxfunctions to generateS data. 
+quiz_button = customtkinter.CTkButton(master=frame, text="New Quiz", command=lambda: auxFunctions.new_question(frame))
+quiz_button.pack()
+
 # Menu bar settings. 
 menu_bar = Menu(frame, background='purple', foreground='black', activebackground='black', activeforeground='purple')
 

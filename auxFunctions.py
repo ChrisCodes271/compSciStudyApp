@@ -1,4 +1,5 @@
 import databaseFunctions
+import customtkinter
 from tkinter import *
 from tkinter import messagebox
 from tkinter import simpledialog
@@ -53,29 +54,31 @@ def gen_question_data():
     return question, correct_answer, answer_bank
 
 
-def new_question_refactor(window):
-    new_window = Toplevel(window)
+def new_question(frame):
+    for widgets in frame():
+        widgets.destroy()
     question_data = gen_question_data()
     question = question_data[0]
     correct_answer = question_data[1]
     answer_bank = question_data[2]
     messagebox.showinfo(title="Question!", message=question)
-    button1 = Button(new_window,
+    button1 = Button(frame,
                      text=answer_bank[0],
                      command=lambda : submit(answer_bank[0], correct_answer))
-    button2 = Button(new_window,
+    button2 = Button(frame,
                      text=answer_bank[1],
                      command=lambda: submit(answer_bank[1], correct_answer))
-    button3 = Button(new_window,
+    button3 = Button(frame,
                      text=answer_bank[2],
                      command=lambda: submit(answer_bank[2], correct_answer))
-    button4 = Button(new_window,
+    button4 = Button(frame,
                      text=answer_bank[3],
                      command=lambda: submit(answer_bank[3], correct_answer))
     button1.pack()
     button2.pack()
     button3.pack()
     button4.pack()
+    
 
 
 def submit(chosen_answer, correct_answer):
