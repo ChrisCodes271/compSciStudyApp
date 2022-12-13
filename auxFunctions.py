@@ -1,4 +1,5 @@
 import databaseFunctions
+import customtkinter
 from tkinter import *
 from tkinter import messagebox
 from tkinter import simpledialog
@@ -59,28 +60,18 @@ def new_question(frame):
     correct_answer = question_data[1]
     answer_bank = question_data[2]
     messagebox.showinfo(title="Question!", message=question)
-    button1 = Button(frame,
-                     text=answer_bank[0],
-                     command=lambda : submit(answer_bank[0], correct_answer))
-    button2 = Button(frame,
-                     text=answer_bank[1],
-                     command=lambda: submit(answer_bank[1], correct_answer))
-    button3 = Button(frame,
-                     text=answer_bank[2],
-                     command=lambda: submit(answer_bank[2], correct_answer))
-    button4 = Button(frame,
-                     text=answer_bank[3],
-                     command=lambda: submit(answer_bank[3], correct_answer))
-    button1.pack()
-    button2.pack()
-    button3.pack()
-    button4.pack()
+    for answer in answer_bank:
+        button = customtkinter.CTkRadioButton(master=frame, text=answer, command=lambda: submit(answer, correct_answer, frame))
+        button.pack()
+    
     
 
 
-def submit(chosen_answer, correct_answer):
-    print(chosen_answer)
-    print(correct_answer)
+def submit(chosen_answer, correct_answer, frame):
+    for widget in frame.winfo_children():
+        widget_type = str(type(widget))
+        if widget_type == "<class 'customtkinter.windows.widgets.ctk_radiobutton.CTkRadioButton'>":
+            widget.destroy()
     if chosen_answer == correct_answer:
         messagebox.showinfo("CORRECT")
     else:
