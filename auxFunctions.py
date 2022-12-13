@@ -1,5 +1,4 @@
 import databaseFunctions
-import customtkinter
 from tkinter import *
 from tkinter import messagebox
 from tkinter import simpledialog
@@ -55,8 +54,6 @@ def gen_question_data():
 
 
 def new_question(frame):
-    for widgets in frame():
-        widgets.destroy()
     question_data = gen_question_data()
     question = question_data[0]
     correct_answer = question_data[1]
