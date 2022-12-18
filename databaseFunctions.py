@@ -1,4 +1,5 @@
 import sqlite3
+import random
 
 
 def create_table():  # Generate FLASHCARDS table. Set CardID, and Card front and back parameters for entries
@@ -49,6 +50,6 @@ def retrieve_card_data():
     answer_2 = random_flash_cards[1][1]
     answer_3 = random_flash_cards[2][1]
     answer_4 = random_flash_cards[3][1]
-    return question, correct_answer, answer_2, answer_3, answer_4
-
-
+    answer_bank = [correct_answer, answer_2, answer_3, answer_4]
+    random.shuffle(answer_bank)
+    return question, correct_answer, answer_bank

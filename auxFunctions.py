@@ -3,7 +3,6 @@ import customtkinter
 from tkinter import *
 from tkinter import messagebox
 from tkinter import simpledialog
-import random
 
 
 def create_test_bank():  # Function to generate new test bank. Called in the add test bank button.
@@ -45,34 +44,33 @@ def delete_flashcard():  # Request what card to erase. Currently, requires SQL E
         messagebox.showerror(title="An Error Occurred", message=str(e))
 
 
-def gen_question_data():
-    card_data = databaseFunctions.retrieve_card_data()
-    question = card_data[0]  # Retrieve question from correct card.
-    correct_answer = card_data[1]
-    answer_bank = [card_data[1], card_data[2], card_data[3], card_data[4]]
-    random.shuffle(answer_bank)
-    return question, correct_answer, answer_bank
-
-
-def new_question(frame):
-    question_data = gen_question_data()
-    question = question_data[0]
-    correct_answer = question_data[1]
-    answer_bank = question_data[2]
-    messagebox.showinfo(title="Question!", message=question)
-    for answer in answer_bank:
-        button = customtkinter.CTkRadioButton(master=frame, text=answer, command=lambda: submit(answer, correct_answer, frame))
-        button.pack()
-    
-    
-
-
 def submit(chosen_answer, correct_answer, frame):
-    for widget in frame.winfo_children():
-        widget_type = str(type(widget))
-        if widget_type == "<class 'customtkinter.windows.widgets.ctk_radiobutton.CTkRadioButton'>":
-            widget.destroy()
     if chosen_answer == correct_answer:
         messagebox.showinfo("CORRECT")
     else:
         messagebox.showinfo("WRONG")
+    # Destroy currently created radiobuttons in frame. 
+    for widget in frame.winfo_children():
+        widget_type = str(type(widget))
+        if widget_type == "<class 'customtkinter.windows.widgets.ctk_radiobutton.CTkRadioButton'>":
+            widget.destroy()
+
+
+def new_question(frame):
+    question_data = databaseFunctions.retrieve_card_data()
+    question = question_data[0]
+    correct_answer = question_data[1]
+    answer_bank = question_data[2]
+    messagebox.showinfo(title="Question!", message=question)
+    choice_1 = customtkinter.CTkRadioButton(master=frame, text=answer_bank[0], command=lambda: submit(answer_bank[0], correct_answer, frame))
+    choice_2 = customtkinter.CTkRadioButton(master=frame, text=answer_bank[1], command=lambda: submit(answer_bank[1], correct_answer, frame))
+    choice_3 = customtkinter.CTkRadioButton(master=frame, text=answer_bank[2], command=lambda: submit(answer_bank[2], correct_answer, frame))
+    choice_4 = customtkinter.CTkRadioButton(master=frame, text=answer_bank[3], command=lambda: submit(answer_bank[3], correct_answer, frame))
+    choice_1.pack()
+    choice_2.pack()
+    choice_3.pack()
+    choice_4.pack()
+    
+    
+
+
